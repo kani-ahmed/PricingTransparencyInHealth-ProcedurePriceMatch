@@ -1,0 +1,4 @@
+2024-03-07 19:30:45,183 - ERROR - Failed to upload Hospital Price Transparency Data/OH/WILLARD/44890/MERCY_WILLARD_HOSPITAL/341577110_Willard_StandardCharges.json. Error: Unknown error
+2024-03-07 19:31:00,399 - ERROR - Failed to upload Hospital Price Transparency Data/OH/CINCINNATI/45255/MERCY_HOSPITAL_ANDERSON/310537085_Anderson_StandardCharges.json. Error: Unknown error
+2024-03-07 19:31:11,794 - ERROR - Failed to upload Hospital Price Transparency Data/OH/CLEVELAND/44106/UH_CLEVELAND_MEDICAL_CENTER/341567805_uh-cleveland-medical-center,-uh-seidman-cancer-center,-uh-rainbow-babies-&-children's-hospital_standardcharges.json. Error: Unknown error
+2024-03-07 19:31:15,940 - ERROR - Failed to upload Hospital Price Transparency Data/OH/CLEVELAND/44106/UH_RAINBOW_BABIES_&_CHILDREN'S_HOSPITAL/341567805_uh-cleveland-medical-center,-uh-seidman-cancer-center,-uh-rainbow-babies-&-children's-hospital_standardcharges.json. Error: Unknown error
