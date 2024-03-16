@@ -31,12 +31,14 @@ logger.addHandler(console_handler)
 # Base directory where the JSON files are stored
 base_dir = 'Hospital Price Transparency Data'
 
+
 def find_json_files(directory):
     """Generator function to find all JSON files within the directory and its subdirectories."""
     for root, dirs, files in os.walk(directory):
         for file in files:
             if file.endswith('.json'):
                 yield os.path.join(root, file)
+
 
 def upload_json_to_redis(file_path):
     """Use subprocess to call redis-cli and upload JSON file content to Redis."""
@@ -52,6 +54,7 @@ def upload_json_to_redis(file_path):
             logger.error(f"Failed to upload {file_path}. Error: {error_message}")
             print(f"Error: {file_path}")  # Terminal output for failure
 
+
 def main():
     json_files = list(find_json_files(base_dir))
     progress_bar = tqdm(total=len(json_files), desc="Uploading files to Redis", unit="file")
@@ -61,6 +64,7 @@ def main():
         progress_bar.update(1)
 
     progress_bar.close()
+
 
 if __name__ == "__main__":
     main()
