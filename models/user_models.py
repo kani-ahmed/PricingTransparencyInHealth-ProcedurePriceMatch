@@ -10,14 +10,11 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)  # Indexed for faster lookups
     email = db.Column(db.String(120), unique=True, nullable=False, index=True)  # For notifications, also indexed
     profile_picture = db.Column(db.String(255))  # URL to profile picture
-    eco_points = db.Column(db.Integer, default=0)  # Tracks eco-points directly on the user
     password_hash = db.Column(db.String(128))
 
     # Define the relationship to MessagesInbox and ChallengesInbox
     messages_inbox = db.relationship('MessagesInbox', back_populates='user', lazy='dynamic',
                                      foreign_keys='MessagesInbox.user_id')
-    challenges_inbox = db.relationship('ChallengesInbox', back_populates='user', lazy='dynamic',
-                                       foreign_keys='ChallengesInbox.user_id')
 
 
 class Notification(db.Model):
