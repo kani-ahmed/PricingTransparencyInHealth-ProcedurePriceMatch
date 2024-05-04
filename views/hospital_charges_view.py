@@ -99,5 +99,6 @@ def build_result(charge):
         "Deidentified_Min_Allowed": str(charge.Deidentified_Min_Allowed),
         "payer": charge.payer,
         "iobSelection": charge.iobSelection,
+        #"payer_allowed_amount": charge.payer_allowed_amount,
         "Hospital": charge.Hospital
     }

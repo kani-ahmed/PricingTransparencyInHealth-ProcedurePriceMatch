@@ -5,13 +5,16 @@ from flask import Flask
 from sqlalchemy import text
 
 from extensions import db, redis_client
+from views import user_view, social_view
 from views.comprehend_medical_service import comprehend_medical_blueprint
 from views.hospital_charges_view import hospital_charges_view
 from views.city_view import city_view
 from views.hospital_view import hospital_view
 from views.payer_view import payer_view
+from views.social_views import register_social_routes
 from views.zipcode_view import zipcode_view
 from dotenv import load_dotenv
+from views.user_views import user_view, register_user_routes
 
 from flask_cors import CORS
 
@@ -25,7 +28,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
+CORS(app, resources={r"/*": {"origins": ["http://54.90.78.202", "http://localhost:3000"]}}, supports_credentials=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 db.init_app(app)
@@ -50,6 +53,12 @@ app.register_blueprint(payer_view)
 
 # Register the zipcode_view Blueprint
 app.register_blueprint(zipcode_view)
+
+app.register_blueprint(user_view)
+register_user_routes(app)
+
+app.register_blueprint(social_view)
+register_social_routes(app)
 
 
 # Function to test database connection
