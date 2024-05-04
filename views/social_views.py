@@ -3,12 +3,14 @@ from flask import request, jsonify, Blueprint
 
 from extensions import db
 from models import Post, Like, Comment, Friendship, User, MessagesInbox
+from flask_cors import cross_origin
 
 social_view = Blueprint('social_view', __name__)
 
 
 def register_social_routes(app):
     @app.route('/create_post', methods=['POST'])
+    @cross_origin(supports_credentials=True)
     def create_post():
         user_id = request.json['user_id']
         content = request.json['content']

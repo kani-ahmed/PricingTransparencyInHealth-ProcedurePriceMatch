@@ -11,6 +11,7 @@ from views.hospital_charges_view import hospital_charges_view
 from views.city_view import city_view
 from views.hospital_view import hospital_view
 from views.payer_view import payer_view
+from views.social_views import register_social_routes
 from views.zipcode_view import zipcode_view
 from dotenv import load_dotenv
 from views.user_views import user_view, register_user_routes
@@ -53,10 +54,11 @@ app.register_blueprint(payer_view)
 # Register the zipcode_view Blueprint
 app.register_blueprint(zipcode_view)
 
-app.register_blueprint(social_view)
-
 app.register_blueprint(user_view)
 register_user_routes(app)
+
+app.register_blueprint(social_view)
+register_social_routes(app)
 
 
 # Function to test database connection
