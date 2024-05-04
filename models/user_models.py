@@ -46,3 +46,14 @@ class MessagesInbox(db.Model):
 
     user = db.relationship('User', backref='received_messages', foreign_keys=[user_id])
     sender = db.relationship('User', backref='sent_messages', foreign_keys=[sender_id])
+
+
+# add a model for chatbot messages and tie it to the user model
+class ChatbotMessage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    message_type = db.Column(db.String(10), nullable=False) # user or bot
+
+    user = db.relationship('User', backref='chatbot_messages')

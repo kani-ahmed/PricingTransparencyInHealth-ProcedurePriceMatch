@@ -100,7 +100,7 @@ def build_query(city, zipcode, cpt_codes, filters):
         query = query.filter_by(ZipCode=zipcode)
     for filter_dict in filters:
         filter_type = filter_dict['filterType']
-        filter_query = filter_dict['filterQuery']
+        filter_query = filter_dict.get('filterQuery', '')  # Use get() with a default value of ''
         query = query.filter(getattr(HospitalCharge, COLUMN_NAME_MAPPING[filter_type]).like(f"%{filter_query}%"))
     return query
 
