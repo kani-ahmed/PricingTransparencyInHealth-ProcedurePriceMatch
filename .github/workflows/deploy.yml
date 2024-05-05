@@ -42,7 +42,6 @@ jobs:
           key: ${{ secrets.AWS_DEPLOY_KEY }}
           source: "."
           target: "${{ env.TARGET_DIRECTORY }}"
-          rm: true  # Remove existing files in the directory
 
       - name: Restart application service
         uses: appleboy/ssh-action@master
