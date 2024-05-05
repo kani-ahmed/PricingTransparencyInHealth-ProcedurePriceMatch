@@ -28,7 +28,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": ["http://54.90.78.202:3000", "http://localhost:3000", "ec2-54-166-226-221.compute-1.amazonaws.com"]}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": ["http://54.90.78.202/*", "http://localhost/*", "ec2-54-166-226-221.compute-1.amazonaws.com/*"]}}, supports_credentials=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 db.init_app(app)
