@@ -28,13 +28,13 @@ load_dotenv()
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": ["http://54.90.78.202", "http://localhost:3000"]}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": ["http://54.90.78.202:3000", "http://localhost:3000"]}}, supports_credentials=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 db.init_app(app)
 
-# After initializing your app
-app.config['REDIS_URL'] = "redis://localhost:6379/0"
+# After initializing app
+app.config['REDIS_URL'] = "redis://latestredis-er2nxa.serverless.use1.cache.amazonaws.com:6379/0"
 redis_client.init_app(app)
 
 app.register_blueprint(hospital_charges_view)
