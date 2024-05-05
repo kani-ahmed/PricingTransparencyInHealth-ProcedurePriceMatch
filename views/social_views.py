@@ -9,7 +9,7 @@ social_view = Blueprint('social_view', __name__)
 
 
 def register_social_routes(app):
-    @app.route('/create_post', methods=['POST'])
+    @app.route('/api/create_post', methods=['POST'])
     @cross_origin(supports_credentials=True)
     def create_post():
         user_id = request.json['user_id']
@@ -25,7 +25,7 @@ def register_social_routes(app):
 
         return jsonify({"message": "Post created successfully", "post_id": new_post.id}), 201
 
-    @app.route('/like_post/<int:post_id>/<int:user_id>', methods=['POST'])
+    @app.route('/api/like_post/<int:post_id>/<int:user_id>', methods=['POST'])
     def like_post(post_id, user_id):
         if not Post.query.get(post_id) or not User.query.get(user_id):
             return jsonify({"error": "Post or user not found"}), 404
@@ -40,7 +40,7 @@ def register_social_routes(app):
 
         return jsonify({"message": "Post liked successfully"}), 201
 
-    @app.route('/add_comment', methods=['POST'])
+    @app.route('/api/add_comment', methods=['POST'])
     def add_comment():
         user_id = request.json['user_id']
         post_id = request.json['post_id']
@@ -55,7 +55,7 @@ def register_social_routes(app):
 
         return jsonify({"message": "Comment added successfully"}), 201
 
-    @app.route('/add_friend/<int:user_id>/<int:friend_id>', methods=['POST'])
+    @app.route('/api/add_friend/<int:user_id>/<int:friend_id>', methods=['POST'])
     def add_friend(user_id, friend_id):
         if user_id == friend_id:
             return jsonify({"error": "Cannot add yourself as a friend"}), 400
@@ -77,7 +77,7 @@ def register_social_routes(app):
 
         return jsonify({"message": "Friend request sent successfully"}), 201
 
-    @app.route('/respond_friend_request/<int:user_id>/<int:friend_id>', methods=['POST'])
+    @app.route('/api/respond_friend_request/<int:user_id>/<int:friend_id>', methods=['POST'])
     def respond_friend_request(user_id, friend_id):
         data = request.get_json()
         action = data.get('action')  # Expecting 'accept' or 'decline'
@@ -99,7 +99,7 @@ def register_social_routes(app):
         action_response = "accepted" if action == "accept" else "declined"
         return jsonify({"message": f"Friend request {action_response}"}), 200
 
-    @app.route('/remove_friend/<int:user_id>/<int:friend_id>', methods=['DELETE'])
+    @app.route('/api/remove_friend/<int:user_id>/<int:friend_id>', methods=['DELETE'])
     def remove_friend(user_id, friend_id):
         # Check if there's a friendship or a friend request from user_id to friend_id
         friendship = Friendship.query.filter(
@@ -125,7 +125,7 @@ def register_social_routes(app):
 
         return jsonify({"message": f"Friend request {action} successfully"}), 200
 
-    @app.route('/view_posts', methods=['GET'])
+    @app.route('/api/view_posts', methods=['GET'])
     def view_posts():
         # Fetch all posts along with user details via a join (this avoids an N+1 query problem)
         posts = Post.query.join(User).all()
@@ -139,7 +139,7 @@ def register_social_routes(app):
 
         return jsonify(post_list), 200
 
-    @app.route('/view_my_posts/<int:user_id>', methods=['GET'])
+    @app.route('/api/view_my_posts/<int:user_id>', methods=['GET'])
     def view_my_posts(user_id):
         # Ensure user exists
         if not User.query.get(user_id):
@@ -157,7 +157,7 @@ def register_social_routes(app):
 
         return jsonify(post_list), 200
 
-    @app.route('/get_users', methods=['GET'])
+    @app.route('/api/get_users', methods=['GET'])
     def get_all_users():
         users = User.query.all()
         user_list = [{
@@ -168,7 +168,7 @@ def register_social_routes(app):
 
         return jsonify(user_list), 200
 
-    @app.route('/get_friendships/<int:user_id>', methods=['GET'])
+    @app.route('/api/get_friendships/<int:user_id>', methods=['GET'])
     def get_user_friendships(user_id):
         friendships = Friendship.query.filter(
             (Friendship.user_id == user_id) | (Friendship.friend_id == user_id)
@@ -192,7 +192,7 @@ def register_social_routes(app):
         return jsonify(friendship_list), 200
 
     # Send a message to another user
-    @app.route('/send_message', methods=['POST'])
+    @app.route('/api/send_message', methods=['POST'])
     def send_message():
         sender_id = request.json.get('sender_id')
         recipient_id = request.json.get('recipient_id')
@@ -225,7 +225,7 @@ def register_social_routes(app):
 
     # View sent messages
     # View sent messages
-    @app.route('/sent_messages/<int:user_id>', methods=['GET'])
+    @app.route('/api/sent_messages/<int:user_id>', methods=['GET'])
     def view_sent_messages(user_id):
         # Check if the user exists
         user = User.query.get(user_id)
@@ -253,7 +253,7 @@ def register_social_routes(app):
             return jsonify({'message': 'Error retrieving sent messages', 'error': str(e)}), 500
 
     # View received messages
-    @app.route('/received_messages/<int:user_id>', methods=['GET'])
+    @app.route('/api/received_messages/<int:user_id>', methods=['GET'])
     def view_received_messages(user_id):
         # Check if the user exists
         user = User.query.get(user_id)

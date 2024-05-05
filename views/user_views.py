@@ -10,7 +10,7 @@ user_view = Blueprint('user_view', __name__)
 
 
 def register_user_routes(app):
-    @app.route('/register', methods=['POST'])
+    @app.route('/api/register', methods=['POST'])
     @cross_origin(supports_credentials=True)
     def register_user():
         data = request.get_json()
@@ -32,7 +32,7 @@ def register_user_routes(app):
 
     # TESTING PURPOSES ONLY
 
-    @app.route('/get_password/<int:user_id>', methods=['GET'])
+    @app.route('/api/get_password/<int:user_id>', methods=['GET'])
     def get_password(user_id):
         user = User.query.get(user_id)
         if not user:
@@ -41,7 +41,7 @@ def register_user_routes(app):
         # Return the password (not recommended for production)
         return jsonify({"password": user.password_hash}), 200
 
-    @app.route('/set_password/<int:user_id>', methods=['POST'])
+    @app.route('/api/set_password/<int:user_id>', methods=['POST'])
     def set_user_password(user_id):
         data = request.get_json()
         password = data.get('password')
@@ -65,7 +65,7 @@ def register_user_routes(app):
 
         return jsonify({"message": "Password set successfully"}), 200
 
-    @app.route('/login', methods=['POST'])
+    @app.route('/api/login', methods=['POST'])
     def login():
         data = request.get_json()
         username = data.get('username')
@@ -82,7 +82,7 @@ def register_user_routes(app):
             # Invalid credentials
             return jsonify({"error": "Invalid username/email or password"}), 401
 
-    @app.route('/update_preferences/<int:user_id>', methods=['PUT'])
+    @app.route('/api/update_preferences/<int:user_id>', methods=['PUT'])
     def update_preferences(user_id):
         data = request.json
         user = User.query.get(user_id)
@@ -101,14 +101,14 @@ def register_user_routes(app):
 
         return jsonify({"message": "Preferences updated successfully"}), 200
 
-    @app.route('/get_notifications/<int:user_id>', methods=['GET'])
+    @app.route('/api/get_notifications/<int:user_id>', methods=['GET'])
     def get_notifications(user_id):
         notifications = Notification.query.filter_by(user_id=user_id).all()
         notifications_data = [{"id": n.id, "content": n.content, "is_read": n.is_read,
                                "timestamp": n.timestamp.strftime('%Y-%m-%d %H:%M:%S')} for n in notifications]
         return jsonify(notifications_data), 200
 
-    @app.route('/view_profile/<int:user_id>', methods=['GET'])
+    @app.route('/api/view_profile/<int:user_id>', methods=['GET'])
     def view_profile(user_id):
         user = User.query.get(user_id)
         if not user:
@@ -131,7 +131,7 @@ def register_user_routes(app):
 
         return jsonify(profile_data), 200
 
-    @app.route('/update_user_profile/<int:user_id>', methods=['PUT'])
+    @app.route('/api/update_user_profile/<int:user_id>', methods=['PUT'])
     def update_user_profile(user_id):
         user = User.query.get(user_id)
         if not user:
@@ -145,14 +145,14 @@ def register_user_routes(app):
 
         return jsonify({"message": "User profile updated successfully"}), 200
 
-    @app.route('/get_chatbot_messages/<int:user_id>', methods=['GET'])
+    @app.route('/api/get_chatbot_messages/<int:user_id>', methods=['GET'])
     def get_chatbot_messages(user_id):
         messages = ChatbotMessage.query.filter_by(user_id=user_id).order_by(ChatbotMessage.timestamp).all()
         message_data = [{"id": m.id, "content": m.content, "timestamp": m.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
                          "message_type": m.message_type} for m in messages]
         return jsonify(message_data), 200
 
-    @app.route('/add_chatbot_message', methods=['POST'])
+    @app.route('/api/add_chatbot_message', methods=['POST'])
     def add_chatbot_message():
         data = request.get_json()
         user_id = data.get('user_id')
