@@ -44,7 +44,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 db.init_app(app)
 
 # After initializing app
-app.config['REDIS_URL'] = "redis://latestredis-er2nxa.serverless.use1.cache.amazonaws.com:6379/0"
+app.config['REDIS_URL'] = "redis://rediscache-er2nxa.serverless.use1.cache.amazonaws.com:6379"
 redis_client.init_app(app)
 
 app.register_blueprint(hospital_charges_view)
@@ -83,9 +83,22 @@ def test_db_connection():
     except Exception as e:
         logging.error(f"Database connection test failed: {e}")
 
+def test_redis_connection():
+    try:
+        with app.app_context():
+            # Test setting a key
+            redis_client.set('test_key', 'test_value')
+            # Test getting the key
+            value = redis_client.get('test_key').decode('utf-8')
+            logging.info(f"Redis connection test was successful. Retrieved value: {value}")
+    except Exception as e:
+        logging.error(f"Redis connection test failed: {e}")
+
+
 
 if __name__ == '__main__':
     with app.app_context():
         test_db_connection()
+        test_redis_connection()
         db.create_all()
     app.run(debug=True)
