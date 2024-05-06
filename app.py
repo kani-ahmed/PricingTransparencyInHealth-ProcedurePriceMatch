@@ -30,8 +30,8 @@ app = Flask(__name__)
 
 # Configure CORS properly to include both the DNS name and the IP address
 allowed_origins = [
-    "http://54.166.226.221",
-    "http://ec2-54-166-226-221.compute-1.amazonaws.com"
+    "http://3.211.246.7",
+    "http://ec2-3-211-246-7.compute-1.amazonaws.com"
 ]
 
 # Add more origins as needed
