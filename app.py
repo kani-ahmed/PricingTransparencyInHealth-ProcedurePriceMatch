@@ -44,7 +44,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 db.init_app(app)
 
 # After initializing app
-app.config['REDIS_URL'] = "redis://rediscache-er2nxa.serverless.use1.cache.amazonaws.com:6379"
+app.config['REDIS_URL'] = "redis://rediscache2.er2nxa.ng.0001.use1.cache.amazonaws.com:6379"
 redis_client.init_app(app)
 
 app.register_blueprint(hospital_charges_view)
