@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  EC2_SSH_HOST: ec2-54-166-226-221.compute-1.amazonaws.com  # EC2 SSH Host
+  EC2_SSH_HOST: ec2-3-211-246-7.compute-1.amazonaws.com  # EC2 SSH Host
   EC2_USER: ubuntu
   TARGET_DIRECTORY: /var/www/html  # Target directory to deploy
 
